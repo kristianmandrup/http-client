@@ -1,13 +1,12 @@
-import {JSONPRequestMessage, createJSONPRequestMessageProcessor} from '../src/jsonp-request-message';
+import {RequestMessage, createRequestMessageProcessor} from '../src/http-request-message';
 import {Headers} from '../src/headers';
 import {RequestMessageProcessor} from '../src/request-message-processor';
 import { timeoutTransformer, callbackParameterNameTransformer } from '../src/transformers';
 
-describe("JSONPRequestMessage", () => {
+describe("RequestMessage with JSONP", () => {
   it("should have a constructor that correctly sets the methods and response type", () => {
     let uri = {}, callbackName = {};
-    let jsonpRequest = new JSONPRequestMessage(uri, callbackName);
-    expect(jsonpRequest.method).toBe('JSONP');
+    let jsonpRequest = new RequestMessage(uri, callbackName);
     expect(jsonpRequest.uri).toBe(uri);
     expect(jsonpRequest.content).toBeUndefined();
     expect(jsonpRequest.headers).toEqual(jasmine.any(Headers));
@@ -15,12 +14,12 @@ describe("JSONPRequestMessage", () => {
     expect(jsonpRequest.callbackParameterName).toBe(callbackName);
   });
 
-  describe("createJSONPRequestMessageProcessor",() => {
-    it("should create a RequestMessageProcessor with an JSONPXHR and the correct transformers", () => {
-      let httpProcessor = createJSONPRequestMessageProcessor();
+  describe("createRequestMessageProcessor",() => {
+    it("should create a RequestMessageProcessor with JSONP and the correct transformers", () => {
+      let httpProcessor = createRequestMessageProcessor();
 
       expect(httpProcessor).toEqual(jasmine.any(RequestMessageProcessor));
-      expect(httpProcessor.XHRType).toBeDefined();
+      expect(httpProcessor.type).toBe('fetch');
       expect(httpProcessor.transformers).toContain(timeoutTransformer);
       expect(httpProcessor.transformers).toContain(callbackParameterNameTransformer);
     });

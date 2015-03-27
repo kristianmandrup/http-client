@@ -28,23 +28,6 @@ describe('headers', () => {
     expect(headers.headers).toEqual({});
   });
 
-  it('configureXHR should add the headers', () => {
-    var headers = new Headers();
-    headers.add('Authorization', '123');
-    headers.add('Content-Type', 'application/json');
-
-    jasmine.Ajax.withMock(() => {
-      var xhr = new XMLHttpRequest();
-
-      headers.configureXHR(xhr);
-
-      expect(xhr.requestHeaders['Authorization']).toBe('123');
-      expect(xhr.requestHeaders['Content-Type']).toBe('application/json');
-    });
-
-
-  });
-
   describe("parse()", () => {
     it("should return a new instance on undefined, null or empty string", () => {
       expect(Headers.parse()).toEqual(jasmine.any(Headers));

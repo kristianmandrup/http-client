@@ -1,4 +1,4 @@
-# aurelia-fetch-client
+# aurelia-http-fetch-client
 
 This library is part of the [Aurelia](http://www.aurelia.io/) platform and contains a simple, restful, message-based wrapper around Fetch API.
 
@@ -11,8 +11,11 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform and conta
 ## Dependencies
 
 * [aurelia-path](https://github.com/aurelia/path)
+* [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch)
 
 ## Fetch API
+
+Initial rework by @kristianmandrup
 
 Useful links
 
@@ -21,9 +24,9 @@ Useful links
 
 Outstanding issues:
 
-- Do we still JSONP this fetch API!?
-- Use `WrappedFetch` for enabling *TimeOut* (see example in [fetch in action](http://blog.gospodarets.com/fetch_in_action) and `src/wrapped-fetch.js` file)
-- Rework tests ;)
+- Do we still JSONP with fetch API!?
+- Use `getWrappedFetch` for enabling *TimeOut* (see example in [fetch in action](http://blog.gospodarets.com/fetch_in_action) and `src/wrapped-fetch.js` file)
+- More rework of test suite ;)
 
 ## Used By
 

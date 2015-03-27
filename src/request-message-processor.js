@@ -21,6 +21,7 @@ export class RequestMessageProcessor {
   // takes fetcher (fetch) as first argument
   constructor(transformers){
     this.transformers = transformers;
+    this.type = 'fetch';
   }
 
   abort(){

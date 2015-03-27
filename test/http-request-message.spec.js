@@ -34,7 +34,7 @@ describe("http-request-message", () => {
       let httpProcessor = createHttpRequestMessageProcessor();
 
       expect(httpProcessor).toEqual(jasmine.any(RequestMessageProcessor));
-      expect(httpProcessor.XHRType).toBe(XMLHttpRequest);
+      expect(httpProcessor.type).toBe('fetch');
       expect(httpProcessor.transformers).toContain(timeoutTransformer);
       expect(httpProcessor.transformers).toContain(credentialsTransformer);
       expect(httpProcessor.transformers).toContain(progressTransformer);
