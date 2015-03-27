@@ -12,7 +12,7 @@ export class RequestBuilder {
 	constructor (client) {
 		this.client = client;
 		this.transformers = client.requestTransformers.slice(0);
-		this.useJsonp = false;
+		this.useJsonp = false; // TODO: do we still JSONP this with fetch!?
 	}
 
 	/**
@@ -37,6 +37,7 @@ export class RequestBuilder {
 	* @return {Promise} A cancellable promise object.
 	*/
 	send(){
+		// TODO: do we still JSONP this with fetch!?
 		let message = this.useJsonp ? new JSONPRequestMessage() : new HttpRequestMessage();
 		return this.client.send(message, this.transformers);
 	}

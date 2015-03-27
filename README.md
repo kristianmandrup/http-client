@@ -14,7 +14,16 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform and conta
 
 ## Fetch API
 
-- See [introduction to fetch](http://updates.html5rocks.com/2015/03/introduction-to-fetch)
+Useful links
+
+- [introduction to fetch](http://updates.html5rocks.com/2015/03/introduction-to-fetch)
+- [fetch in action](http://blog.gospodarets.com/fetch_in_action)
+
+Outstanding issues:
+
+- Do we still JSONP this fetch API!?
+- Use `WrappedFetch` for enabling *TimeOut* (see example in [fetch in action](http://blog.gospodarets.com/fetch_in_action) and `src/wrapped-fetch.js` file)
+- Rework tests ;)
 
 ## Used By
 

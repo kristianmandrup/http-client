@@ -15,20 +15,6 @@ export class Headers {
     this.headers = {};
   }
 
-  /**
-   * Use HTML5 Fetch API :)
-   */
-  configureFetch(fhr){
-    var headers = this.headers, key;
-
-    for(key in headers){
-      fhr.setRequestHeader(key, headers[key]);
-    }
-  }
-
-  /**
-   * Use HTML5 Fetch API :)
-   */
   static parse(headerStr){
     var headers = new Headers();
     if (!headerStr) {

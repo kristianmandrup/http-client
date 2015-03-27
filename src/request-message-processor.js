@@ -1,4 +1,5 @@
-import {HttpResponseMessage} from './http-response-message';
+import {HttpResponseMessage}    from './http-response-message';
+import wrappedFetch             from './wrapped-fetch';
 import {join, buildQueryString} from 'aurelia-path';
 
 function buildFullUri(message){
@@ -36,15 +37,24 @@ export class RequestMessageProcessor {
         transformers[i](client, this, message);
       }
 
+      let handleError = function(message, error) {
+        reject(new HttpResponseMessage(message, {
+          response: error,
+          status: error.status,
+          statusText: error.message
+        }, 'error'));
+      }
+
       let status = function(response) {  
         if (response.status >= 200 && response.status < 300) {  
           return response
         } else {  
-          reject(new Error(response.statusText)); 
+          handleError(message, error);
         }  
       }
 
-      let json = function(response) {  
+      // send json response as data to success handler
+      let json = function(response) {
         return response.json()  
       }
 
@@ -53,11 +63,7 @@ export class RequestMessageProcessor {
       }      
 
       let err = function(error) {  
-        reject(new HttpResponseMessage(message, {
-          response: error,
-          status: error.status,
-          statusText: error.message
-        }, 'error'));
+        handleError(message, error);
       }
 
       fetch(message.fullUri, message.options)
