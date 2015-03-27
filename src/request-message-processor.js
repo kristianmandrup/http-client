@@ -18,65 +18,53 @@ function buildFullUri(message){
 
 export class RequestMessageProcessor {
   // takes fetcher (fetch) as first argument
-  constructor(fhrType, transformers){
-    this.FHRType = fhrType;
+  constructor(transformers){
     this.transformers = transformers;
   }
 
   abort(){
-    //The logic here is if the fhr object is not set then there is nothing to abort so the intent was carried out
-    if(this.fhr){
-      this.fhr.abort();
-    }
+    // ??
   }
 
   process(client, message){
-    return new Promise((resolve, reject) => {
-      var fhr = this.fhr = new this.FHRType(),
-          transformers = this.transformers,
-          i, ii;
+    return new Promise((resolve, reject) => {      
+      var transformers = this.transformers,
+        i, ii;
 
       buildFullUri(message);
-      fhr.open(message.method, message.fullUri, true);
-
       for(i = 0, ii = transformers.length; i < ii; ++i){
-        transformers[i](client, this, message, fhr);
+        transformers[i](client, this, message);
       }
 
-      fhr.onload = (e) => {
-        var response = new HttpResponseMessage(message, fhr, message.responseType, message.reviver);
-        if(response.isSuccess){
-          resolve(response);
-        }else{
-          reject(response);
-        }
-      };
+      let status = function(response) {  
+        if (response.status >= 200 && response.status < 300) {  
+          return response
+        } else {  
+          reject(new Error(response.statusText)); 
+        }  
+      }
 
-      fhr.ontimeout = (e) => {
-        reject(new HttpResponseMessage(message, {
-          response:e,
-          status:fhr.status,
-          statusText:fhr.statusText
-        }, 'timeout'));
-      };
+      let json = function(response) {  
+        return response.json()  
+      }
 
-      fhr.onerror = (e) => {
+      let success = function(data) {  
+        resolve(new HttpResponseMessage(message, message.options, message.reviver));
+      }      
+
+      let err = function(error) {  
         reject(new HttpResponseMessage(message, {
-          response:e,
-          status:fhr.status,
-          statusText:fhr.statusText
+          response: error,
+          status: error.status,
+          statusText: error.message
         }, 'error'));
-      };
+      }
 
-      fhr.onabort = (e) => {
-        reject(new HttpResponseMessage(message, {
-          response:e,
-          status:fhr.status,
-          statusText:fhr.statusText
-        }, 'abort'));
-      };
-
-      fhr.send(message.content);
+      fetch(message.fullUri, message.options)
+        .then(status)
+        .then(json)
+        .then(success)
+        .catch(err);
     });
   }
 }

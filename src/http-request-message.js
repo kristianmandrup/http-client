@@ -20,7 +20,7 @@ export class HttpRequestMessage {
 }
 
 export function createHttpRequestMessageProcessor(){
-  return new RequestMessageProcessor(fetch, [
+  return new RequestMessageProcessor([
     timeoutTransformer,
     credentialsTransformer,
     progressTransformer,
