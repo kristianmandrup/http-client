@@ -1,17 +1,17 @@
 import {Headers} from './headers';
 
 export class HttpResponseMessage {
-  constructor(requestMessage, xhr, responseType, reviver){
+  constructor(requestMessage, fhr, responseType, reviver){
     this.requestMessage = requestMessage;
-    this.statusCode = xhr.status;
-    this.response = xhr.response;
-    this.isSuccess = xhr.status >= 200 && xhr.status < 400;
-    this.statusText = xhr.statusText;
+    this.statusCode = fhr.status;
+    this.response = fhr.response;
+    this.isSuccess = fhr.status >= 200 && fhr.status < 400;
+    this.statusText = fhr.statusText;
     this.responseType = responseType;
     this.reviver = reviver;
 
-    if(xhr.getAllResponseHeaders){
-      this.headers = Headers.parse(xhr.getAllResponseHeaders());
+    if(fhr.getAllResponseHeaders){
+      this.headers = Headers.parse(fhr.getAllResponseHeaders());
     }else {
       this.headers = new Headers();
     }

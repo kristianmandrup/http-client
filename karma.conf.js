@@ -18,7 +18,6 @@ module.exports = function(config) {
       serveFiles : ['src/**/*.js']
     },
 
-
     // list of files / patterns to load in the browser
     files: [],
 

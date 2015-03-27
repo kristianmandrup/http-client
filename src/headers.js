@@ -15,19 +15,19 @@ export class Headers {
     this.headers = {};
   }
 
-  configureXHR(xhr){
+  /**
+   * Use HTML5 Fetch API :)
+   */
+  configureFetch(fhr){
     var headers = this.headers, key;
 
     for(key in headers){
-      xhr.setRequestHeader(key, headers[key]);
+      fhr.setRequestHeader(key, headers[key]);
     }
   }
 
   /**
-   * XmlHttpRequest's getAllResponseHeaders() method returns a string of response
-   * headers according to the format described here:
-   * http://www.w3.org/TR/XMLHttpRequest/#the-getallresponseheaders-method
-   * This method parses that string into a user-friendly key/value pair object.
+   * Use HTML5 Fetch API :)
    */
   static parse(headerStr){
     var headers = new Headers();

@@ -13,34 +13,38 @@ function buildFullUri(message){
   message.fullUri = uri;
 }
 
+// I think fetch can handle both normal request and jsonp :)
+// No need for FHRType!!
+
 export class RequestMessageProcessor {
-  constructor(xhrType, transformers){
-    this.XHRType = xhrType;
+  // takes fetcher (fetch) as first argument
+  constructor(fhrType, transformers){
+    this.FHRType = fhrType;
     this.transformers = transformers;
   }
 
   abort(){
-    //The logic here is if the xhr object is not set then there is nothing to abort so the intent was carried out
-    if(this.xhr){
-      this.xhr.abort();
+    //The logic here is if the fhr object is not set then there is nothing to abort so the intent was carried out
+    if(this.fhr){
+      this.fhr.abort();
     }
   }
 
   process(client, message){
     return new Promise((resolve, reject) => {
-      var xhr = this.xhr = new this.XHRType(),
+      var fhr = this.fhr = new this.FHRType(),
           transformers = this.transformers,
           i, ii;
 
       buildFullUri(message);
-      xhr.open(message.method, message.fullUri, true);
+      fhr.open(message.method, message.fullUri, true);
 
       for(i = 0, ii = transformers.length; i < ii; ++i){
-        transformers[i](client, this, message, xhr);
+        transformers[i](client, this, message, fhr);
       }
 
-      xhr.onload = (e) => {
-        var response = new HttpResponseMessage(message, xhr, message.responseType, message.reviver);
+      fhr.onload = (e) => {
+        var response = new HttpResponseMessage(message, fhr, message.responseType, message.reviver);
         if(response.isSuccess){
           resolve(response);
         }else{
@@ -48,31 +52,31 @@ export class RequestMessageProcessor {
         }
       };
 
-      xhr.ontimeout = (e) => {
+      fhr.ontimeout = (e) => {
         reject(new HttpResponseMessage(message, {
           response:e,
-          status:xhr.status,
-          statusText:xhr.statusText
+          status:fhr.status,
+          statusText:fhr.statusText
         }, 'timeout'));
       };
 
-      xhr.onerror = (e) => {
+      fhr.onerror = (e) => {
         reject(new HttpResponseMessage(message, {
           response:e,
-          status:xhr.status,
-          statusText:xhr.statusText
+          status:fhr.status,
+          statusText:fhr.statusText
         }, 'error'));
       };
 
-      xhr.onabort = (e) => {
+      fhr.onabort = (e) => {
         reject(new HttpResponseMessage(message, {
           response:e,
-          status:xhr.status,
-          statusText:xhr.statusText
+          status:fhr.status,
+          statusText:fhr.statusText
         }, 'abort'));
       };
 
-      xhr.send(message.content);
+      fhr.send(message.content);
     });
   }
 }

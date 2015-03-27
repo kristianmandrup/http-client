@@ -16,7 +16,8 @@ export class JSONPRequestMessage {
   }
 }
 
-class JSONPXHR {
+// Is there a Fetch variant of JSONP??
+class JSONPFHR {
   open(method, uri){
     this.method = method;
     this.uri = uri;
@@ -62,8 +63,9 @@ class JSONPXHR {
   setRequestHeader(){}
 }
 
+// Use JSONP or just fetch API??
 export function createJSONPRequestMessageProcessor(){
-  return new RequestMessageProcessor(JSONPXHR, [
+  return new RequestMessageProcessor(JSONPFHR, [
     timeoutTransformer,
     callbackParameterNameTransformer
   ]);

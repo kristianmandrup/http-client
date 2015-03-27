@@ -1,6 +1,6 @@
-# aurelia-http-client
+# aurelia-fetch-client
 
-This library is part of the [Aurelia](http://www.aurelia.io/) platform and contains a simple, restful, message-based wrapper around XMLHttpRequest.
+This library is part of the [Aurelia](http://www.aurelia.io/) platform and contains a simple, restful, message-based wrapper around Fetch API.
 
 > To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to join us on [![Join the chat at https://gitter.im/aurelia/discuss](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aurelia/discuss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge).
 
@@ -11,6 +11,10 @@ This library is part of the [Aurelia](http://www.aurelia.io/) platform and conta
 ## Dependencies
 
 * [aurelia-path](https://github.com/aurelia/path)
+
+## Fetch API
+
+- See [introduction to fetch](http://updates.html5rocks.com/2015/03/introduction-to-fetch)
 
 ## Used By
 

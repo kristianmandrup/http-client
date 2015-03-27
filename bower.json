@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "aurelia-path": "^0.4.6",
-    "core-js": "zloirock/core-js"
+    "core-js": "zloirock/core-js",
+    "isomorphic-fetch": "x"
   }
 }

@@ -1,42 +1,42 @@
-export function timeoutTransformer(client, processor, message, xhr){
+export function timeoutTransformer(client, processor, message, fhr){
   if(message.timeout !== undefined){
-    xhr.timeout = message.timeout;
+    fhr.timeout = message.timeout;
   }
 }
 
-export function callbackParameterNameTransformer(client, processor, message, xhr){
+export function callbackParameterNameTransformer(client, processor, message, fhr){
   if(message.callbackParameterName !== undefined){
-    xhr.callbackParameterName = message.callbackParameterName;
+    fhr.callbackParameterName = message.callbackParameterName;
   }
 }
 
-export function credentialsTransformer(client, processor, message, xhr){
+export function credentialsTransformer(client, processor, message, fhr){
   if(message.withCredentials !== undefined){
-    xhr.withCredentials = message.withCredentials;
+    fhr.withCredentials = message.withCredentials;
   }
 }
 
-export function progressTransformer(client, processor, message, xhr){
+export function progressTransformer(client, processor, message, fhr){
   if(message.progressCallback){
-    xhr.upload.onprogress = message.progressCallback;
+    fhr.upload.onprogress = message.progressCallback;
   }
 }
 
-export function responseTypeTransformer(client, processor, message, xhr){
+export function responseTypeTransformer(client, processor, message, fhr){
   var responseType = message.responseType;
 
   if(responseType === 'json'){
     responseType = 'text'; //IE does not support json
   }
 
-  xhr.responseType = responseType;
+  fhr.responseType = responseType;
 }
 
-export function headerTransformer(client, processor, message, xhr){
-  message.headers.configureXHR(xhr);
+export function headerTransformer(client, processor, message, fhr){
+  message.headers.configureFHR(fhr);
 }
 
-export function contentTransformer(client, processor, message, xhr){
+export function contentTransformer(client, processor, message, fhr){
   if(window.FormData && message.content instanceof FormData){
     return;
   }
